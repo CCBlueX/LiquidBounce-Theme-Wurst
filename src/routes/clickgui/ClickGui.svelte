@@ -1,22 +1,35 @@
 <script lang="ts">
     import {onMount} from "svelte";
     import {getGameWindow, getModules, getModuleSettings, setTyping} from "../../integration/rest";
-    import {groupByCategory} from "../../integration/util";
-    import type {ConfigurableSetting, GroupedModules, Module, TogglableSetting} from "../../integration/types";
-    import Panel from "./Panel.svelte";
-    import Search from "./Search.svelte";
-    import Description from "./Description.svelte";
+    import type {ConfigurableSetting, Module, TogglableSetting} from "../../integration/types";
+    import WurstSearch from "./WurstSearch.svelte";
+    import WurstModuleGrid from "./WurstModuleGrid.svelte";
+    import WurstModuleSettings from "./WurstModuleSettings.svelte";
     import {fade} from "svelte/transition";
     import {listen} from "../../integration/ws";
     import type {ClickGuiValueChangeEvent, ScaleFactorChangeEvent} from "../../integration/events";
-    import {gridSize, scaleFactor, showGrid, snappingEnabled} from "./clickgui_store";
+    import {gridSize, scaleFactor, showGrid, snappingEnabled, activeSettings} from "./clickgui_store";
 
-    let categories: GroupedModules = {};
     let modules: Module[] = [];
+    let filteredModules: Module[] = [];
     let minecraftScaleFactor = 2;
     let clickGuiScaleFactor = 1;
+    let searchQuery = "";
+    
     $: {
         scaleFactor.set(minecraftScaleFactor * clickGuiScaleFactor);
+    }
+
+    $: {
+        if (searchQuery.trim() === "") {
+            filteredModules = modules;
+        } else {
+            const query = searchQuery.toLowerCase();
+            filteredModules = modules.filter(module => 
+                module.name.toLowerCase().includes(query) ||
+                module.aliases.some(alias => alias.toLowerCase().includes(query))
+            );
+        }
     }
 
     function applyValues(configurable: ConfigurableSetting) {
@@ -28,12 +41,16 @@
         $gridSize = snappingValue?.value.find(v => v.name === "GridSize")?.value as number ?? 10;
     }
 
+    function closeSettings() {
+        activeSettings.set(null);
+    }
+
     onMount(async () => {
         const gameWindow = await getGameWindow();
         minecraftScaleFactor = gameWindow.scaleFactor;
 
         modules = await getModules();
-        categories = groupByCategory(modules);
+        filteredModules = modules;
 
         const clickGuiSettings = await getModuleSettings("ClickGUI");
         applyValues(clickGuiSettings);
@@ -50,34 +67,32 @@
     });
 </script>
 
-<div class="clickgui" class:grid={$showGrid} transition:fade|global={{duration: 200}}
-     style="transform: scale({$scaleFactor * 50}%); width: {2 / $scaleFactor * 100}vw; height: {2 / $scaleFactor * 100}vh;
-     background-size: {$gridSize}px {$gridSize}px;">
-    <Description/>
-    <Search modules={structuredClone(modules)}/>
-
-    {#each Object.entries(categories) as [category, modules], panelIndex}
-        <Panel {category} {modules} {panelIndex}/>
-    {/each}
+<div class="wurst-clickgui" transition:fade|global={{duration: 200}}>
+    <WurstSearch bind:searchQuery />
+    <WurstModuleGrid modules={filteredModules} />
+    
+    {#if $activeSettings}
+        <WurstModuleSettings 
+            module={$activeSettings.module} 
+            moduleSettings={$activeSettings.settings} 
+            on:close={closeSettings} 
+        />
+    {/if}
 </div>
 
 <style lang="scss">
   @use "../../colors.scss" as *;
 
-  $GRID_SIZE: 10px;
-
-  .clickgui {
-    background-color: rgba($clickgui-base-color, 0.6);
-    overflow: hidden;
+  .wurst-clickgui {
     position: absolute;
-    will-change: opacity;
-    transform-origin: top left;
-    left: 0;
     top: 0;
-
-    &.grid {
-      background-image: linear-gradient(to right, $clickgui-grid-color 1px, transparent 1px),
-      linear-gradient(to bottom, $clickgui-grid-color 1px, transparent 1px);
-    }
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    overflow: hidden;
+    font-family: "Minecraft.otf", sans-serif;
+    font-size: 12px;
+    color: white;
   }
 </style>

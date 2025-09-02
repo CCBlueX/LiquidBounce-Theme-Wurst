@@ -6,6 +6,8 @@
 
 ## Preview
 ![ingame-hud](/.github/img/ingame-hud.png)
+![clickgui](/.github/img/clickgui.png)
+![clickgui-settings](/.github/img/clickgui-settings.png)
 ![title](/.github/img/title.png)
 
 ## Download
