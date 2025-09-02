@@ -97,7 +97,7 @@
     width: 100%;
     border: none;
     border-bottom: solid 1px $accent-color;
-    font-family: "Inter", sans-serif;
+    font-family: "Minecraft.otf", sans-serif;
     font-size: 12px;
     padding: 5px;
     color: $clickgui-text-color;

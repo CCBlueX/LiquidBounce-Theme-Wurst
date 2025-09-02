@@ -118,7 +118,7 @@
     font-weight: 500;
     color: $clickgui-text-color;
     font-size: 12px;
-    font-family: "Inter", sans-serif;
+    font-family: "Minecraft.otf", sans-serif;
     width: 100%;
     display: flex;
     justify-content: center;

@@ -1,30 +1,9 @@
 @use "colors.scss" as *;
 
 @font-face {
-    font-family: "Inter";
-    src: url("./assets/font/inter/Inter-Bold.ttf") format("truetype");
-    font-weight: 600;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "Inter";
-    src: url("./assets/font/inter/Inter-Medium.ttf") format("truetype");
-    font-weight: 500;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "Inter";
-    src: url("./assets/font/inter/Inter-Regular.ttf") format("truetype");
+    font-family: "Minecraft.otf";
+    src: url("./assets/font/Minecraft.otf") format("opentype");
     font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "Inter";
-    src: url("./assets/font/inter/Inter-Light.ttf") format("truetype");
-    font-weight: 300;
     font-style: normal;
 }
 
@@ -39,7 +18,7 @@
 }
 
 body {
-    font-family: "Inter", sans-serif;
+    font-family: "Minecraft.otf", sans-serif;
     user-select: none;
     overflow: hidden;
 }

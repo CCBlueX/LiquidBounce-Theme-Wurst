@@ -18,7 +18,7 @@
     background-color: rgba($menu-base-color, .36);
     border: none;
     color: $menu-text-color;
-    font-family: "Inter", sans-serif;
+    font-family: "Minecraft.otf", sans-serif;
     font-size: 20px;
     border-radius: 5px;
     border-bottom: solid 4px $accent-color;

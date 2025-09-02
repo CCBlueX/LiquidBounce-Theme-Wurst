@@ -38,7 +38,7 @@
     border: none;
     background-color: $accent-color;
     color: $menu-text-color;
-    font-family: "Inter", sans-serif;
+    font-family: "Minecraft.otf", sans-serif;
     padding: 20px;
     border-radius: 5px;
     font-size: 20px;
