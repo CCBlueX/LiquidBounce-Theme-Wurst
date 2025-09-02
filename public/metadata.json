@@ -35,7 +35,7 @@
             },
             {
               "name": "HorizontalOffset",
-              "value": 15
+              "value": 0
             },
             {
               "name": "Vertical",
@@ -43,7 +43,7 @@
             },
             {
               "name": "VerticalOffset",
-              "value": 15
+              "value": 0
             }
           ]
         }
@@ -54,7 +54,7 @@
       "value": [
         {
           "name": "Enabled",
-          "value": true
+          "value": false
         },
         {
           "name": "Alignment",
@@ -91,7 +91,7 @@
           "value": [
             {
               "name": "Horizontal",
-              "value": "Right"
+              "value": "Left"
             },
             {
               "name": "HorizontalOffset",
@@ -114,7 +114,7 @@
       "value": [
         {
           "name": "Enabled",
-          "value": true
+          "value": false
         },
         {
           "name": "Alignment",
@@ -144,7 +144,7 @@
       "value": [
         {
           "name": "Enabled",
-          "value": true
+          "value": false
         },
         {
           "name": "Alignment",
@@ -174,7 +174,7 @@
       "value": [
         {
           "name": "Enabled",
-          "value": true
+          "value": false
         },
         {
           "name": "Alignment",
@@ -328,7 +328,7 @@
       "value": [
         {
           "name": "Enabled",
-          "value": true
+          "value": false
         },
         {
           "name": "Alignment",
@@ -358,7 +358,7 @@
       "value": [
         {
           "name": "Enabled",
-          "value": true
+          "value": false
         },
         {
           "name": "Alignment",
@@ -388,7 +388,7 @@
       "value": [
         {
           "name": "Enabled",
-          "value": true
+          "value": false
         },
         {
           "name": "Alignment",
