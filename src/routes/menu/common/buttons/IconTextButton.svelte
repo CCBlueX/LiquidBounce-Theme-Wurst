@@ -56,7 +56,7 @@
 
     .title {
       font-size: 20px;
-      font-weight: 500;
+      font-family: "Minecraft.otf", sans-serif;
       color: $menu-text-color;
       padding: 0 30px;
     }
