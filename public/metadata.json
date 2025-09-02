@@ -4,15 +4,15 @@
   "author": "CCBlueX",
   "supports": [
     "clickgui",
-    "title",
     "proxymanager",
-    "multiplayer",
     "altmanager",
-    "customize",
-    "singleplayer"
+    "customize"
   ],
   "overlays": [
     "hud",
+    "title",
+    "multiplayer",
+    "singleplayer",
     "inventory",
     "container",
     "disconnected",

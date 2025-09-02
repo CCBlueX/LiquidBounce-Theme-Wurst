@@ -15,8 +15,8 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="main-button" on:mouseenter={() => hovered = true} on:mouseleave={() => hovered = false} on:click={() => hovered = false}
-     on:click={() => dispatch("click")} out:fly|global={{duration: 400, x: -500, delay: index * 100, easing: backIn}}
-     in:fly|global={{duration: 400, x: -500, delay: index * 100, easing: backOut}}>
+     on:click={() => dispatch("click")} out:fly|global={{duration: 200, y: 50, delay: index * 50, easing: backIn}}
+     in:fly|global={{duration: 200, y: 50, delay: index * 50, easing: backOut}}>
     <div class="icon">
         {#if !hovered}
             <img transition:fade={{duration: 200}} src="img/menu/icon-{icon}.svg" alt={icon}>

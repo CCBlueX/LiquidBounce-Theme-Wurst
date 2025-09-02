@@ -51,8 +51,6 @@
 </script>
 
 <div class="header">
-    <img class="logo" src="img/lb-logo.svg" alt="logo">
-
     <Notifications />
 
     <Account/>
