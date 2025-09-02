@@ -31,12 +31,12 @@
 </script>
 
 <!-- Wurst Logo -->
-<img class="wurst-logo" src="img/wurst_128.png" alt="Wurst Client" />
+<img class="wurst-logo" src="img/wurst_128.png" alt="Wurst Client"  transition:fly|global={{duration: 200, y: -60, delay: 0}} />
 
 
 <Menu>
     <div class="content">
-        <div class="bottom-section" transition:fly|global={{duration: 300, y: 50, delay: 200}}>
+        <div class="bottom-section" transition:fly|global={{duration: 200, y: 50, delay: 0}}>
             <div class="additional-buttons">
                 <ButtonContainer>
                     
