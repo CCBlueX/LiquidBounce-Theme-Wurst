@@ -30,10 +30,6 @@
     });
 </script>
 
-<!-- Wurst Logo -->
-<img class="wurst-logo" src="img/wurst_128.png" alt="Wurst Client"  transition:fly|global={{duration: 200, y: -60, delay: 0}} />
-
-
 <Menu>
     <div class="content">
         <div class="bottom-section" transition:fly|global={{duration: 200, y: 50, delay: 0}}>
@@ -63,6 +59,9 @@
     </div>
 </Menu>
 
+<!-- Wurst Logo -->
+<img class="wurst-logo" src="img/wurst_128.png" alt="Wurst Client"  transition:fly|global={{duration: 200, y: -60, delay: 0}} />
+
 <style>
     .content {
         flex: 1;
@@ -71,14 +70,15 @@
     }
 
     .wurst-logo {
-        height: 160px;
-        width: auto;
+        height: auto;
+        width: 590px;
         position: absolute;
-        top: 60px;
+        top: 50px;
         left: 50%;
         transform: translateX(-50%);
         filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
         z-index: 10;
+        object-fit: contain; /* Ensure the image scales properly within the fixed dimensions */
     }
 
     .bottom-section {
