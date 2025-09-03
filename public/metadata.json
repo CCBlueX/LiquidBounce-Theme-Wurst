@@ -1,7 +1,8 @@
 {
+  "id": "wurst",
   "name": "Wurst",
   "version": "0.1.0",
-  "author": ["CCBlueX"],
+  "authors": ["CCBlueX"],
   "screens": [
     "clickgui",
     "proxymanager",
@@ -25,7 +26,7 @@
   "fonts": [
     "Minecraft.otf"
   ],
-  "background": [
+  "backgrounds": [
     {
       "name": "background",
       "types": ["frag", "png"]
