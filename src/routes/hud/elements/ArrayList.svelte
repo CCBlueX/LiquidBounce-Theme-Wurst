@@ -2,8 +2,8 @@
     import { onMount } from "svelte";
     import { fly } from "svelte/transition";
   import { getModules } from "../../../integration/rest";
-  import { Module } from "../../../integration/types";
   import { listen } from "../../../integration/ws";
+  import type { Module } from "../../../integration/types";
 
     let enabledModules: Module[] = [];
 
