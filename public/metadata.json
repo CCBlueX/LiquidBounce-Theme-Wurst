@@ -31,5 +31,6 @@
       "name": "background",
       "types": ["frag", "png"]
     }
-  ]
+  ],
+  "values": []
 }
