@@ -1,11 +1,11 @@
 <script lang="ts">
-    import Router, {push} from "svelte-spa-router";
-    import ClickGui from "./routes/clickgui/ClickGui.svelte";
+    import Router, {location, push} from "svelte-spa-router";
     import Hud from "./routes/hud/Hud.svelte";
-    import {getVirtualScreen} from "./integration/rest";
+    import {getMetadata, getTheme, getVirtualScreen} from "./integration/rest";
     import {cleanupListeners, listenAlways} from "./integration/ws";
     import {onMount} from "svelte";
     import {insertPersistentData} from "./integration/persistent_storage";
+    import {isStatic} from "./integration/host";
     import Inventory from "./routes/inventory/Inventory.svelte";
     import Title from "./routes/menu/title/Title.svelte";
     import Multiplayer from "./routes/menu/multiplayer/Multiplayer.svelte";
@@ -15,32 +15,90 @@
     import None from "./routes/none/None.svelte";
     import Disconnected from "./routes/menu/disconnected/Disconnected.svelte";
     import Browser from "./routes/browser/Browser.svelte";
+    import TabbedClickGui from "./routes/clickgui/TabbedClickGui.svelte";
+    import {intToRgba, rgbaToHex} from "./integration/util";
+    import type {ThemeColorChangeEvent} from "./integration/events";
+    import Menu from "./routes/menu/common/Menu.svelte";
+    import MenuContent from "./routes/menu/common/MenuContent.svelte";
 
-    const routes = {
-        "/clickgui": ClickGui,
-        "/hud": Hud,
-        "/inventory": Inventory,
+    const menuRoutes = {
         "/title": Title,
         "/multiplayer": Multiplayer,
         "/altmanager": AltManager,
         "/singleplayer": Singleplayer,
         "/proxymanager": ProxyManager,
+    };
+
+    const routes = {
+        "/clickgui": TabbedClickGui,
+        "/hud": Hud,
+        "/inventory": Inventory,
         "/none": None,
         "/disconnected": Disconnected,
         "/browser": Browser
     };
 
-    const hash = window.location.hash;
-    const isStatic = hash.includes("?static") || hash.includes("&static");
+    const SURFACE_TINT_MIX = 18;
+
+    function isMenuRoute(route: string): boolean {
+        return route in menuRoutes;
+    }
 
     async function changeRoute(name: string) {
-        cleanupListeners();
+        const nextRoute = `/${name}`;
+        if (!isMenuRoute($location) || !isMenuRoute(nextRoute)) {
+            cleanupListeners();
+        }
+
         console.log(`[Router] Redirecting to ${name}`);
-        await push(`/${name}`);
+        await push(nextRoute);
+    }
+
+    function setThemeColor(name: string, value: string) {
+        document.documentElement.style.setProperty(`--${name}`, value);
+    }
+
+    function themeColorToHex(value: number) {
+        return rgbaToHex(intToRgba(value));
+    }
+
+    function mixColors(leftColor: string, rightColor: string, strength: number) {
+        return `color-mix(in srgb, ${leftColor} ${100 - strength}%, ${rightColor})`;
+    }
+
+    function applyAccentColor(color: number) {
+        setThemeColor("accent-color", themeColorToHex(color));
+    }
+
+    function applyTintColor(defaultSurfaceColor: string, color: number) {
+        setThemeColor("surface-color", mixColors(defaultSurfaceColor, themeColorToHex(color), SURFACE_TINT_MIX));
     }
 
     onMount(async () => {
+        let metadata = await getMetadata();
+        let defaultSurfaceColor = metadata.colors.Tint;
+
+        let theme = await getTheme(metadata.id);
+
+        applyAccentColor(theme.colors.accent);
+        applyTintColor(defaultSurfaceColor, theme.colors.tint);
+
         await insertPersistentData();
+
+        listenAlways("themeColorChange", async (event: ThemeColorChangeEvent) => {
+            if (event.themeId !== metadata?.id) {
+                return;
+            }
+
+            switch (event.name) {
+                case "Accent":
+                    applyAccentColor(event.value);
+                    break;
+                case "Tint":
+                    applyTintColor(defaultSurfaceColor, event.value);
+                    break;
+            }
+        });
 
         if (isStatic) {
             return;
@@ -71,5 +129,15 @@
 </script>
 
 <main>
-    <Router {routes}/>
+    {#if isMenuRoute($location)}
+        <Menu>
+            {#key $location}
+                <MenuContent>
+                    <Router routes={menuRoutes}/>
+                </MenuContent>
+            {/key}
+        </Menu>
+    {:else}
+        <Router {routes}/>
+    {/if}
 </main>

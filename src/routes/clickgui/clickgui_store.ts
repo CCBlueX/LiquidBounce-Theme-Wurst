@@ -12,6 +12,7 @@ export interface ActiveSettings {
     module: Module;
     settings: ConfigurableSetting;
 }
+export const os: Writable<string | null> = writable<string | null>(null);
 
 export const description: Writable<TDescription | null> = writable(null);
 
@@ -28,3 +29,4 @@ export const snappingEnabled: Writable<boolean> = writable(true);
 export const gridSize: Writable<number> = writable(10);
 
 export const activeSettings: Writable<ActiveSettings | null> = writable(null);
+export const darken = writable(true);

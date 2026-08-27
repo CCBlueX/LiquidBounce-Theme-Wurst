@@ -1,13 +1,19 @@
 <script lang="ts">
+    import LiquidBounceLogo from "../../../../components/LiquidBounceLogo.svelte";
     import Account from "./account/Account.svelte";
+    import AnimatedLogo from "./AnimatedLogo.svelte";
     import Notifications from "./Notifications.svelte";
     import {listen} from "../../../../integration/ws";
+    import {location} from "svelte-spa-router";
     import type {
         AccountManagerAdditionEvent,
         AccountManagerLoginEvent,
         AccountManagerMessageEvent
     } from "../../../../integration/events";
     import {notification} from "./notification_store";
+    import {isAnniversary} from "../../../../util/utils";
+
+    $: showAnniversaryLogo = $location === "/title" && isAnniversary();
 
     listen("accountManagerAddition", (e: AccountManagerAdditionEvent) => {
         if (!e.error) {
@@ -62,5 +68,20 @@
     justify-content: space-between;
     margin-bottom: 60px;
     align-items: center;
+  }
+
+  .logo-wrapper {
+    display: grid;
+  }
+
+  .logo {
+    grid-area: 1 / 1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .5s ease;
+
+    &.visible {
+      opacity: 1;
+    }
   }
 </style>

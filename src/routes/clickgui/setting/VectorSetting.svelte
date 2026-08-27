@@ -1,11 +1,15 @@
 <script lang="ts">
     import {createEventDispatcher} from "svelte";
-    import type {BlockHitResult, ModuleSetting, VectorSetting} from "../../../integration/types";
+    import type {BlockHitResult, ModuleSetting, Setting, Vec, Vec3Setting, VecAxis} from "../../../integration/types";
     import {convertToSpacedString, spaceSeperatedNames} from "../../../theme/theme_config";
     import {getCrosshairData, getPlayerData} from "../../../integration/rest";
 
     export let setting: ModuleSetting;
-    const cSetting = setting as VectorSetting;
+    export let vecAxes: VecAxis[];
+    export let step: number;
+
+    const cSetting = setting as Setting<Vec<typeof vecAxes[number]>>;
+    const useLocateButton = (setting as Vec3Setting).useLocateButton ?? false;
 
     const dispatch = createEventDispatcher();
 
@@ -19,11 +23,10 @@
 
         if (hitResult.type === "block") {
             const blockHitResult = hitResult as BlockHitResult;
-
-            cSetting.value = blockHitResult.blockPos;
+            (cSetting as Vec3Setting).value = blockHitResult.blockPos;
         } else {
             const playerData = await getPlayerData();
-            cSetting.value = playerData.blockPosition;
+            (cSetting as Vec3Setting).value = playerData.blockPosition;
         }
         handleChange();
     }
@@ -31,19 +34,26 @@
 
 <div class="setting">
     <div class="name">{$spaceSeperatedNames ? convertToSpacedString(cSetting.name) : cSetting.name}</div>
-    <div class="input-group">
-        <input type="number" class="value" spellcheck="false" placeholder="X" bind:value={cSetting.value.x}
-               on:input={handleChange}/>
-        <input type="number" class="value" spellcheck="false" placeholder="Y" bind:value={cSetting.value.y}
-               on:input={handleChange}/>
-        <input type="number" class="value" spellcheck="false" placeholder="Z" bind:value={cSetting.value.z}
-               on:input={handleChange}/>
-        <button class="locate-btn" on:click={locate} title="Locate">&#x2299;</button>
+    <div class="input-group"
+         style="grid-template-columns: repeat({vecAxes.length}, 1fr) {useLocateButton ? '20px' : ''}">
+        {#each vecAxes as axis (axis)}
+            <input
+                    type="number"
+                    {step}
+                    class="value"
+                    spellcheck="false"
+                    placeholder={axis.toUpperCase()}
+                    bind:value={cSetting.value[axis]}
+                    on:input={handleChange}
+            />
+        {/each}
+        {#if useLocateButton}
+            <button class="locate-btn" on:click={locate} title="Locate">&#x2299;</button>
+        {/if}
     </div>
 </div>
 
 <style lang="scss">
-  @use "../../../colors.scss" as *;
 
   .setting {
     padding: 7px 0;
@@ -51,24 +61,23 @@
 
   .name {
     font-weight: 500;
-    color: $clickgui-text-color;
+    color: var(--clickgui-text-color);
     font-size: 12px;
     margin-bottom: 5px;
   }
 
   .input-group {
     display: grid;
-    grid-template-columns: repeat(3, 1fr) 20px;
     column-gap: 5px;
 
     input.value {
       width: 100%;
-      background-color: rgba($clickgui-base-color, .36);
+      background-color: var(--clickgui-input-background-color);
       font-family: monospace;
       font-size: 12px;
-      color: $clickgui-text-color;
+      color: var(--clickgui-text-color);
       border: none;
-      border-bottom: solid 2px $accent-color;
+      border-bottom: solid 2px var(--clickgui-input-border-color);
       padding: 5px;
       border-radius: 3px;
       transition: ease border-color .2s;
@@ -91,7 +100,7 @@
       background-color: transparent;
       border: none;
       cursor: pointer;
-      color: $clickgui-text-color;
+      color: var(--clickgui-text-color);
       font-size: 12px;
       text-align: right;
     }

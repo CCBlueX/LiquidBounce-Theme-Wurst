@@ -12,7 +12,7 @@
     import ColorSetting from "../ColorSetting.svelte";
     import TextSetting from "../TextSetting.svelte";
     import {slide} from "svelte/transition";
-    import BindSetting from "../BindSetting.svelte";
+    import BindSetting from "../bind/BindSetting.svelte";
     import VectorSetting from "../VectorSetting.svelte";
     import KeySetting from "../KeySetting.svelte";
     import MultiChooseSetting from "../MultiChooseSetting.svelte";
@@ -21,6 +21,7 @@
     import ItemListSetting from "../list/ItemListSetting.svelte";
     import RegistryListSetting from "../list/RegistryListSetting.svelte";
     import CurveSetting from "../CurveSetting.svelte";
+    import RegistryMutableListSetting from "../list/RegistryMutableListSetting.svelte";
 
     export let setting: ModuleSetting;
     export let path: string;
@@ -60,15 +61,21 @@
         <ItemListSetting {path} bind:setting={setting} on:change/>
     {:else if setting.valueType === "REGISTRY_LIST" }
         <RegistryListSetting {path} bind:setting={setting} on:change/>
+    {:else if setting.valueType === "REGISTRY_MUTABLE_LIST" }
+        <RegistryMutableListSetting {path} bind:setting={setting} on:change/>
     {:else if setting.valueType === "BIND"}
         <BindSetting bind:setting={setting} on:change/>
-    {:else if setting.valueType === "VECTOR3_I" || setting.valueType === "VECTOR3_D" }
-        <VectorSetting bind:setting={setting} on:change/>
+    {:else if setting.valueType === "VECTOR3_I" }
+        <VectorSetting vecAxes={["x", "y", "z"]} step={1} bind:setting={setting} on:change/>
+    {:else if setting.valueType === "VECTOR3_D" }
+        <VectorSetting vecAxes={["x", "y", "z"]} step={0.01} bind:setting={setting} on:change/>
+    {:else if setting.valueType === "VECTOR2_F" }
+        <VectorSetting vecAxes={["x", "y"]} step={0.01} bind:setting={setting} on:change/>
     {:else if setting.valueType === "KEY"}
         <KeySetting bind:setting={setting} on:change/>
     {:else if setting.valueType === "CURVE"}
         <CurveSetting {path} bind:setting={setting} on:change/>
     {:else}
-        <div style="color: white">Unsupported setting {setting.valueType}</div>
+        <div style="color: var(--clickgui-text-color)">Unsupported setting {setting.valueType}</div>
     {/if}
 </div>

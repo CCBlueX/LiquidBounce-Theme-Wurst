@@ -1,4 +1,5 @@
 <script lang="ts">
+    import ConfettiBackground from "./ConfettiBackground.svelte";
     import ButtonContainer from "../common/buttons/ButtonContainer.svelte";
     import IconTextButton from "../common/buttons/IconTextButton.svelte";
     import IconButton from "../common/buttons/IconButton.svelte";
@@ -9,10 +10,10 @@
         openScreen,
         toggleBackgroundShaderEnabled
     } from "../../../integration/rest";
-    import Menu from "../common/Menu.svelte";
     import {fly} from "svelte/transition";
     import {onMount} from "svelte";
     import {notification} from "../common/header/notification_store";
+    import {isAnniversary} from "../../../util/utils";
 
     onMount(() => {
         setTimeout(async () => {
@@ -30,7 +31,11 @@
     });
 </script>
 
-<Menu>
+<div class="title-screen">
+    {#if isAnniversary()}
+        <ConfettiBackground/>
+    {/if}
+
     <div class="content">
         <div class="bottom-section" transition:fly|global={{duration: 200, y: 50, delay: 0}}>
             <div class="additional-buttons">
@@ -57,12 +62,20 @@
             </div>
         </div>
     </div>
-</Menu>
+</div>
 
 <!-- Wurst Logo -->
 <img class="wurst-logo" src="img/wurst_128.png" alt="Wurst Client"  transition:fly|global={{duration: 200, y: -60, delay: 0}} />
 
 <style>
+    .title-screen {
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+    }
+
     .content {
         flex: 1;
         display: flex;

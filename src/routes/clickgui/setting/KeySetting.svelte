@@ -5,13 +5,13 @@
     import {createEventDispatcher} from "svelte";
     import {listen} from "../../../integration/ws";
     import type {KeyboardKeyEvent, MouseButtonEvent} from "../../../integration/events";
+    import {isClickGuiScreen, UNKNOWN_KEY} from "../../../util/utils";
 
     export let setting: ModuleSetting;
 
     const cSetting = setting as KeySetting;
 
     const dispatch = createEventDispatcher();
-    const UNKNOWN_KEY = "key.keyboard.unknown";
 
     let isHovered = false;
     let binding = false;
@@ -39,8 +39,7 @@
     }
 
     listen("keyboardKey", async (e: KeyboardKeyEvent) => {
-        if (e.screen === undefined || !e.screen.class.startsWith("net.ccbluex.liquidbounce") ||
-            !(e.screen.title === "ClickGUI" || e.screen.title === "VS-CLICKGUI")) {
+        if (!isClickGuiScreen(e.screen)) {
             return;
         }
 
@@ -62,8 +61,7 @@
     });
 
     listen("mouseButton", async (e: MouseButtonEvent) => {
-        if (e.screen === undefined || !e.screen.class.startsWith("net.ccbluex.liquidbounce") ||
-            !(e.screen.title === "ClickGUI" || e.screen.title === "VS-CLICKGUI")) {
+        if (!isClickGuiScreen(e.screen)) {
             return;
         }
 
@@ -103,7 +101,6 @@
 </div>
 
 <style lang="scss">
-  @use "../../../colors.scss" as *;
 
   .setting {
     padding: 7px 0;
@@ -111,12 +108,12 @@
 
   .change-bind {
     background-color: transparent;
-    border: solid 2px $accent-color;
+    border: solid 2px var(--accent-color);
     border-radius: 3px;
     cursor: pointer;
     padding: 4px;
     font-weight: 500;
-    color: $clickgui-text-color;
+    color: var(--clickgui-text-color);
     font-size: 12px;
     font-family: "Minecraft.otf", sans-serif;
     width: 100%;
@@ -129,7 +126,7 @@
     }
 
     .none {
-      color: $clickgui-text-dimmed-color;
+      color: var(--clickgui-text-dimmed-color);
     }
   }
 </style>

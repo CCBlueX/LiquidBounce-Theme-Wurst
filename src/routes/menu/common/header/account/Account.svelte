@@ -1,27 +1,29 @@
 <script lang="ts">
     import ToolTip from "../../ToolTip.svelte";
     import {
+        directLoginToCrackedAccount,
         getAccounts,
         getSession,
-        openScreen,
         loginToAccount,
-        directLoginToCrackedAccount,
+        openScreen,
         randomUsername
     } from "../../../../../integration/rest";
     import {onMount} from "svelte";
     import {listen} from "../../../../../integration/ws";
     import {location} from "svelte-spa-router";
     import {quintOut} from "svelte/easing";
-    import {fade, slide} from "svelte/transition";
+    import {fade, slide, fly} from "svelte/transition";
     import type {Account} from "../../../../../integration/types";
     import Avatar from "./Avatar.svelte";
     import {notification} from "../notification_store";
     import RippleLoader from "../../RippleLoader.svelte";
     import {isLoggingIn} from "../../../altmanager/altmanager_store";
+    import {isAnniversary} from "../../../../../util/utils";
 
     let username = "";
+    let service = "";
     let avatar = "";
-    let premium = true;
+    let online = true;
 
     let expanded = false;
     let accountElement: HTMLElement;
@@ -32,13 +34,15 @@
 
     $: renderedAccounts = accounts.filter(a => a.username.toLowerCase().includes(searchQuery.toLowerCase()) || searchQuery === "");
 
-    const inAccountManager = $location === "/altmanager";
+    $: inAccountManager = $location === "/altmanager";
+    $: inTitle = $location === "/title";
 
     async function refreshSession() {
         const session = await getSession();
         username = session.username;
+        service = session.service;
         avatar = session.avatar;
-        premium = session.premium;
+        online = session.online;
     }
 
     async function refreshAccounts() {
@@ -105,20 +109,26 @@
 <div class="account" class:expanded bind:this={accountElement} on:click={handleSelectClick}>
     <div class="header" bind:this={headerElement}>
         {#if $isLoggingIn}
-            <div class="avatar" transition:fade={{ duration: 200 }}>
+            <div class="avatar-wrapper" transition:fade={{ duration: 200 }}>
                 <RippleLoader size={68} />
             </div>
         {:else}
-            <object data={avatar} type="image/png" class="avatar" aria-label="avatar" in:fade={{ duration: 200, delay: 200 }}>
-                <img src="img/steve.png" alt=avatar class="avatar">
-            </object>
+            <div class="avatar-wrapper">
+                <object data={avatar} type="image/png" class="avatar" aria-label="avatar" in:fade={{ duration: 200, delay: 200 }}>
+                    <img src="img/steve.png" alt=avatar class="avatar">
+                </object>
+
+                {#if isAnniversary() && inTitle}
+                    <img transition:fly={{duration: 500, y: -10}} class="party-hat" src="img/anniversary/party-hat.svg" alt="party-hat">
+                {/if}
+            </div>
         {/if}
         <div class="username">{username}</div>
         <div class="account-type">
-            {#if premium}
-                <span class="premium">Premium</span>
+            {#if online}
+                <span class="online">{service}</span>
             {:else}
-                <span class="offline">Offline</span>
+                <span class="offline">{service}</span>
             {/if}
         </div>
         <div class="buttons">
@@ -165,7 +175,6 @@
 </div>
 
 <style lang="scss">
-  @use "../../../../../colors" as *;
 
   .account {
     width: 488px;
@@ -179,7 +188,7 @@
   }
 
   .header {
-    background-color: rgba($hotbar-base-color, 0.68);
+    background-color: var(--menu-account-header-background-color);
     padding: 15px 18px;
     border-radius: 5px;
     align-items: center;
@@ -192,16 +201,28 @@
     cursor: pointer;
     transition: ease border-radius .2s;
 
-    .avatar {
-      height: 68px;
-      width: 68px;
-      border-radius: 50%;
+    .avatar-wrapper {
       grid-area: a;
+      position: relative;
+
+      .avatar {
+        height: 68px;
+        width: 68px;
+        border-radius: 50%;
+      }
+
+      .party-hat {
+        position: absolute;
+        height: 130px;
+        top: -70px;
+        left: -38px;
+        transform: rotate(-30deg);
+      }
     }
 
     .username {
       font-weight: 600;
-      color: $menu-text-color;
+      color: var(--menu-text-color);
       font-size: 20px;
       grid-area: b;
       align-self: flex-end;
@@ -213,12 +234,12 @@
       grid-area: d;
       align-self: flex-start;
 
-      .premium {
-        color: $menu-account-premium-color;
+      .online {
+        color: var(--menu-account-premium-color);
       }
 
       .offline {
-        color: $menu-text-dimmed-color;
+        color: var(--menu-text-dimmed-color);
       }
     }
 
@@ -237,6 +258,7 @@
       cursor: pointer;
       display: flex;
       align-items: center;
+      transition: ease opacity .2s;
 
       &:disabled {
         pointer-events: none;
@@ -250,24 +272,24 @@
     z-index: 1000;
     width: 100%;
     border-radius: 0 0 5px 5px;
-    background-color: rgba($menu-base-color, 0.9);
+    background-color: var(--menu-account-switcher-background-color);
 
     .placeholder {
       font-weight: 500;
       font-size: 20px;
-      color: $menu-text-dimmed-color;
+      color: var(--menu-text-dimmed-color);
       padding: 15px 20px;
     }
 
     .account-search {
-      background-color: rgba($menu-base-color, .36);
+      background-color: var(--menu-account-search-background-color);
       border: none;
-      color: $menu-text-color;
+      color: var(--menu-text-color);
       font-family: "Minecraft.otf", sans-serif;
       padding: 15px 15px 15px 50px;
       width: 100%;
       font-size: 18px;
-      border-bottom: solid 4px $accent-color;
+      border-bottom: solid 4px var(--menu-account-search-border-color);
       background-image: url("/img/menu/icon-search.svg");
       background-repeat: no-repeat;
       background-position: 18px center;
@@ -280,7 +302,7 @@
     }
 
     .account-item {
-      color: $menu-text-dimmed-color;
+      color: var(--menu-text-dimmed-color);
       font-size: 20px;
       padding: 15px 20px;
       transition: ease color .2s;
@@ -304,12 +326,12 @@
       }
 
       &:hover {
-        color: $menu-text-color;
+        color: var(--menu-text-color);
       }
 
       &.active {
         .username {
-          color: $accent-color;
+          color: var(--accent-color);
         }
       }
     }
