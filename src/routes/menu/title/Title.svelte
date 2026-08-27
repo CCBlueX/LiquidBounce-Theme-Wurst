@@ -1,5 +1,6 @@
 <script lang="ts">
     import ConfettiBackground from "./ConfettiBackground.svelte";
+    import Menu from "../common/Menu.svelte";
     import ButtonContainer from "../common/buttons/ButtonContainer.svelte";
     import IconTextButton from "../common/buttons/IconTextButton.svelte";
     import IconButton from "../common/buttons/IconButton.svelte";
@@ -31,7 +32,7 @@
     });
 </script>
 
-<div class="title-screen">
+<Menu>
     {#if isAnniversary()}
         <ConfettiBackground/>
     {/if}
@@ -62,19 +63,12 @@
             </div>
         </div>
     </div>
-</div>
+</Menu>
 
 <!-- Wurst Logo -->
 <img class="wurst-logo" src="img/wurst_128.png" alt="Wurst Client"  transition:fly|global={{duration: 200, y: -60, delay: 0}} />
 
 <style>
-    .title-screen {
-        position: relative;
-        isolation: isolate;
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-    }
 
     .content {
         flex: 1;

@@ -17,6 +17,13 @@
     outline: none;
 }
 
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
 body {
     font-family: "Minecraft.otf", sans-serif;
     user-select: none;

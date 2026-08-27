@@ -37,7 +37,8 @@
     --window-max-height: 70vh;
     background-color: var(--clickgui-window-background-color);
     max-height: var(--window-max-height, none);
-    border-radius: 5px;
+    border-radius: 0;
+    border: 1px solid rgba(128, 128, 128, 0.5);
     overflow: hidden;
     box-shadow: 0 0 10px var(--clickgui-window-shadow-color);
     user-select: none;

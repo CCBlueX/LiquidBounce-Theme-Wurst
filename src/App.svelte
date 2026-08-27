@@ -22,7 +22,6 @@
     import MenuContent from "./routes/menu/common/MenuContent.svelte";
 
     const menuRoutes = {
-        "/title": Title,
         "/multiplayer": Multiplayer,
         "/altmanager": AltManager,
         "/singleplayer": Singleplayer,
@@ -30,6 +29,7 @@
     };
 
     const routes = {
+        "/title": Title,
         "/clickgui": TabbedClickGui,
         "/hud": Hud,
         "/inventory": Inventory,

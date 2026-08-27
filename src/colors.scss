@@ -352,3 +352,51 @@ $item-damage-base-color: black;
   --confetti-color-7: #ff8fab;
   --confetti-shadow-color: rgba(255, 255, 255, 0.12);
 }
+
+/* Wurst mapping for the UI introduced upstream (tabs, settings window, HUD
+   editor). Uses this theme's own flat-panel language - grey fills, grey
+   hairline borders, orange accent - instead of upstream's soft defaults. */
+:root {
+  --clickgui-tabs-background-color: rgba(64, 64, 64, 0.8);
+  --clickgui-tabs-shadow-color: rgba(0, 0, 0, 0.5);
+  --clickgui-tab-hover-background-color: rgba(96, 96, 96, 0.9);
+  --clickgui-tab-active-background-color: #ad5504;
+  --clickgui-tab-active-border-color: rgba(128, 128, 128, 0.5);
+
+  --clickgui-window-background-color: rgba(64, 64, 64, 0.8);
+  --clickgui-window-shadow-color: rgba(0, 0, 0, 0.5);
+  --clickgui-window-header-background-color: rgba(48, 48, 48, 0.9);
+  --clickgui-window-header-border-color: rgba(128, 128, 128, 0.5);
+  --clickgui-global-settings-divider-color: rgba(128, 128, 128, 0.5);
+
+  --clickgui-input-background-color: rgba(48, 48, 48, 0.9);
+  --clickgui-input-border-color: rgba(128, 128, 128, 0.5);
+  --clickgui-button-background-color: rgba(96, 96, 96, 0.9);
+  --clickgui-button-hover-background-color: #ad5504;
+  --clickgui-setting-group-border-color: rgba(128, 128, 128, 0.5);
+
+  --clickgui-switch-track-color: rgba(32, 32, 32, 0.9);
+  --clickgui-switch-thumb-color: rgba(200, 200, 200, 1);
+  --clickgui-switch-track-active-color: rgba(96, 96, 96, 0.9);
+  --clickgui-switch-thumb-active-color: #ad5504;
+  --clickgui-slider-track-color: rgba(32, 32, 32, 0.9);
+  --clickgui-slider-handle-color: #ad5504;
+  --clickgui-slider-fill-color: #ad5504;
+
+  --clickgui-dropdown-background-color: rgba(48, 48, 48, 0.95);
+  --clickgui-dropdown-border-color: rgba(128, 128, 128, 0.5);
+  --clickgui-dropdown-option-selected-color: #ad5504;
+  --clickgui-selection-chip-background-color: rgba(48, 48, 48, 0.9);
+  --clickgui-selection-chip-selected-background-color: rgba(173, 85, 4, 0.35);
+  --clickgui-selection-chip-selected-color: #ad5504;
+
+  --clickgui-hud-editor-drawer-background-color: rgba(64, 64, 64, 0.9);
+  --clickgui-hud-editor-drawer-shadow-color: rgba(0, 0, 0, 0.5);
+  --clickgui-hud-editor-drawer-component-background-color: rgba(48, 48, 48, 0.9);
+  --clickgui-hud-editor-drawer-component-border-color: rgba(128, 128, 128, 0.5);
+  --clickgui-hud-editor-drawer-component-hover-background-color: rgba(96, 96, 96, 0.9);
+  --clickgui-hud-editor-drawer-component-hover-border-color: #ad5504;
+  --clickgui-hud-editor-drawer-toggle-button-background-color: rgba(96, 96, 96, 0.9);
+  --clickgui-hud-editor-component-settings-background-color: rgba(64, 64, 64, 0.9);
+  --clickgui-hud-editor-component-settings-shadow-color: rgba(0, 0, 0, 0.5);
+}
