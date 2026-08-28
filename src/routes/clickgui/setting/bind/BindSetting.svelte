@@ -203,7 +203,7 @@
 
   .change-bind {
     background-color: transparent;
-    border: solid 2px var(--accent-color);
+    border: solid 2px #ad5504;
     border-radius: 3px;
     cursor: pointer;
     padding: 4px;

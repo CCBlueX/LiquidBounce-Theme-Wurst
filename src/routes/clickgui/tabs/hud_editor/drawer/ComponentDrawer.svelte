@@ -96,7 +96,7 @@
     color: var(--text-color);
     font-size: 16px;
     background-color: transparent;
-    border-bottom: solid 2px var(--accent-color);
+    border-bottom: solid 2px #ad5504;
     padding: 15px 25px;
     width: 100%;
     box-sizing: border-box;

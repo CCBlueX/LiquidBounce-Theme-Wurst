@@ -40,6 +40,6 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--accent-color);
+    background-color: colors.$accent-color;
     border-radius: 10px;
 }
