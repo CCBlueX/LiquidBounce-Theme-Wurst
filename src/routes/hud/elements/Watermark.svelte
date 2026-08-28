@@ -17,25 +17,23 @@
 </div>
 
 <style lang="scss">
+    @use "../../../colors.scss" as *;
+
     .watermark {
         display: flex;
         align-items: center;
         column-gap: 10px;
         font-size: 20px;
         padding-right: 5px;
-        background-color: rgba(white, 0.5);
+        background-color: rgba($wurst-accent, 0.5);
         height: 22px;
-
-        position: fixed;
-        left: 0;
-        top: 12px;
 
         .logo {
             height: 35px;
         }
 
         .version {
-            color: black;
+            color: $wurst-text;
             white-space: nowrap;
         }
     }

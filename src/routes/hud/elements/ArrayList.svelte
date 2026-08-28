@@ -79,7 +79,7 @@
     color: var(--arraylist-text-color);
     font-size: 20px;
     line-height: 20px;
-    text-shadow: black 2px 2px;
+    text-shadow: black 1px 1px;
     width: max-content;
   }
 

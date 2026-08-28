@@ -51,82 +51,100 @@
             <span class="module-name">{module.name}</span>
         </button>
         {#if hasSettings}
-            <button class="settings-arrow" on:click={toggleSettings}>
-                <span class="arrow">▶</span>
+            <button class="settings-arrow" on:click={toggleSettings} aria-label="Settings">
+                <span class="arrow"></span>
             </button>
         {/if}
     </div>
 </div>
 
 <style lang="scss">
+    @use "../../colors.scss" as *;
+
     .wurst-module {
         height: 35px;
         width: 240px;
         position: relative;
     }
-    
+
+    /* Wurst fills the feature box with the background colour at the GUI
+       opacity, and multiplies that opacity by 1.5 while hovered. */
     .module-button {
         width: 100%;
         height: 100%;
-        background: rgba(64, 64, 64, 0.8);
-        border: 1px solid rgba(128, 128, 128, 0.5);
+        background: rgba($wurst-bg, $wurst-opacity);
         display: flex;
         transition: background-color 0.2s;
+
+        &:hover {
+            background: rgba($wurst-bg, $wurst-hover-opacity);
+        }
     }
-    
+
+    .wurst-module.enabled .module-button {
+        background: rgba($wurst-enabled, $wurst-opacity);
+
+        &:hover {
+            background: rgba($wurst-enabled, $wurst-hover-opacity);
+        }
+    }
+
     .main-button {
         flex: 1;
+        min-width: 0;
         background: none;
         border: none;
-        color: white;
+        color: $wurst-text;
         font-size: 18px;
         font-family: "Minecraft.otf", sans-serif;
         cursor: pointer;
-        padding: 0 5px;
+        padding: 0 8px;
         text-align: left;
-        
-        &:hover {
-            background: rgba(96, 96, 96, 0.9);
-        }
     }
-    
-    .wurst-module.enabled .module-button {
-        background: #00FF00;
-    }
-    
-    .wurst-module.enabled .main-button {
-        &:hover {
-            background: #32FF32;
-        }
-    }
-    
+
     .module-name {
-        flex: 1;
-        text-align: left;
+        display: block;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
     }
-    
+
+    /* the arrow sits in a square the height of the box, split off by a
+       vertical accent line inset two pixels top and bottom */
     .settings-arrow {
+        position: relative;
+        flex: 0 0 35px;
+        height: 100%;
         background: none;
         border: none;
-        color: inherit;
         cursor: pointer;
         padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 18px;
-        height: 100%;
-        border-left: 1px solid rgba(128, 128, 128, 0.5);
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 4px;
+            bottom: 4px;
+            width: 1px;
+            background: rgba($wurst-accent, 0.5);
+        }
     }
-    
+
     .arrow {
-        font-size: 8px;
-        transition: transform 0.2s;
-        color: #00FF00;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        width: 0;
+        height: 0;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-top: 8px solid $wurst-arrow;
+        filter: drop-shadow(0 0 1px rgba($wurst-accent, 0.5));
+        transition: border-top-color 0.2s;
+    }
+
+    .settings-arrow:hover .arrow {
+        border-top-color: $wurst-arrow-hover;
     }
 </style>

@@ -7,7 +7,7 @@
     "horizontalAlignment": "Left",
     "horizontalOffset": 0,
     "verticalAlignment": "Top",
-    "verticalOffset": 0
+    "verticalOffset": 30
   },
   "values": [
     {
@@ -18,14 +18,20 @@
     {
       "type": "CHOOSE",
       "name": "ItemAlignment",
-      "value": "Right",
-      "choices": ["Left", "Right"]
+      "value": "Left",
+      "choices": [
+        "Left",
+        "Right"
+      ]
     },
     {
       "type": "CHOOSE",
       "name": "Order",
       "value": "Descending",
-      "choices": ["Ascending", "Descending"]
+      "choices": [
+        "Ascending",
+        "Descending"
+      ]
     }
   ]
 }

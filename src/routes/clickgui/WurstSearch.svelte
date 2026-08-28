@@ -28,6 +28,7 @@
 </div>
 
 <style lang="scss">
+    @use "../../colors.scss" as *;
     .wurst-search {
         position: absolute;
         top: 40px;
@@ -41,7 +42,7 @@
     }
     
     .search-label {
-        color: white;
+        color: $wurst-text;
         font-size: 20px;
         font-weight: normal;
     }
@@ -49,14 +50,14 @@
     .search-input {
         background: transparent;
         border: none;
-        color: white;
+        color: $wurst-text;
         font-size: 20px;
         outline: none;
         font-family: "Minecraft.otf", sans-serif;
         min-width: 200px;
         
         &::placeholder {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(240, 240, 240, 0.7);
         }
     }
 </style>

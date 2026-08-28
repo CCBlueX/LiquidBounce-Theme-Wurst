@@ -1,4 +1,18 @@
-$accent-color: #ad5504;
+/* Wurst client palette - defaults taken from Wurst7's ClickGuiHack:
+   Background #404040, Accent #101010, Text #F0F0F0, Opacity 50%,
+   Tooltip opacity 75%. Enabled features render pure green at the same
+   opacity, and the navigator arrow is #00D900 (#00FF00 while hovered). */
+$wurst-bg: #404040;
+$wurst-accent: #101010;
+$wurst-text: #f0f0f0;
+$wurst-opacity: 0.5;
+$wurst-hover-opacity: 0.75; // Wurst multiplies opacity by 1.5 when hovered
+$wurst-dense-opacity: 0.75; // tooltip opacity, used for text-heavy surfaces
+$wurst-enabled: #00ff00;
+$wurst-arrow: #00d900;
+$wurst-arrow-hover: #00ff00;
+
+$accent-color: $wurst-arrow;
 
 $clickgui-base-color: black;
 $clickgui-text-color: white;
@@ -46,7 +60,7 @@ $item-damage-base-color: black;
   --text-color: #ffffff;
   --text-dimmed-color: #d3d3d3;
 
-  --accent-color: #ad5504;
+  --accent-color: #00d900;
   --accent-hover-color: color-mix(in srgb, var(--accent-color) 82%, black);
   --accent-subtle-background-color: color-mix(in srgb, var(--accent-color) 12%, transparent);
 
@@ -361,49 +375,64 @@ $item-damage-base-color: black;
 }
 
 /* Wurst mapping for the UI introduced upstream (tabs, settings window, HUD
-   editor). Uses this theme's own flat-panel language - grey fills, grey
-   hairline borders, orange accent - instead of upstream's soft defaults. */
+   editor), expressed with the real client's palette: #404040 panels at 50%,
+   #101010 separators, #F0F0F0 text, and green for anything enabled/active.
+   Wurst's UI has no orange in it - that belongs to the logo. */
 :root {
-  --clickgui-tabs-background-color: rgba(64, 64, 64, 0.8);
-  --clickgui-tabs-shadow-color: rgba(0, 0, 0, 0.5);
-  --clickgui-tab-hover-background-color: rgba(96, 96, 96, 0.9);
-  --clickgui-tab-active-background-color: #ad5504;
-  --clickgui-tab-active-border-color: rgba(128, 128, 128, 0.5);
+  --clickgui-text-color: #f0f0f0;
+  --clickgui-text-dimmed-color: rgba(240, 240, 240, 0.65);
 
-  --clickgui-window-background-color: rgba(64, 64, 64, 0.8);
-  --clickgui-window-shadow-color: rgba(0, 0, 0, 0.5);
-  --clickgui-window-header-background-color: rgba(48, 48, 48, 0.9);
-  --clickgui-window-header-border-color: rgba(128, 128, 128, 0.5);
-  --clickgui-global-settings-divider-color: rgba(128, 128, 128, 0.5);
+  --clickgui-tabs-background-color: rgba(64, 64, 64, 0.5);
+  --clickgui-tabs-shadow-color: rgba(16, 16, 16, 0.5);
+  --clickgui-tab-hover-background-color: rgba(64, 64, 64, 0.75);
+  --clickgui-tab-active-background-color: rgba(0, 255, 0, 0.5);
+  --clickgui-tab-active-border-color: rgba(16, 16, 16, 0.5);
 
-  --clickgui-input-background-color: rgba(48, 48, 48, 0.9);
-  --clickgui-input-border-color: rgba(128, 128, 128, 0.5);
-  --clickgui-button-background-color: rgba(96, 96, 96, 0.9);
-  --clickgui-button-hover-background-color: #ad5504;
-  --clickgui-setting-group-border-color: rgba(128, 128, 128, 0.5);
+  /* text-heavy surfaces use Wurst's tooltip opacity (75%) */
+  --clickgui-window-background-color: rgba(64, 64, 64, 0.75);
+  --clickgui-window-shadow-color: rgba(16, 16, 16, 0.5);
+  --clickgui-window-header-background-color: rgba(16, 16, 16, 0.5);
+  --clickgui-window-header-border-color: rgba(16, 16, 16, 0.5);
+  --clickgui-global-settings-divider-color: rgba(16, 16, 16, 0.5);
 
-  --clickgui-switch-track-color: rgba(32, 32, 32, 0.9);
-  --clickgui-switch-thumb-color: rgba(200, 200, 200, 1);
-  --clickgui-switch-track-active-color: rgba(96, 96, 96, 0.9);
-  --clickgui-switch-thumb-active-color: #ad5504;
-  --clickgui-slider-track-color: rgba(32, 32, 32, 0.9);
-  --clickgui-slider-handle-color: #ad5504;
-  --clickgui-slider-fill-color: #ad5504;
+  --clickgui-input-background-color: rgba(16, 16, 16, 0.5);
+  --clickgui-input-border-color: rgba(16, 16, 16, 0.5);
+  --clickgui-button-background-color: rgba(64, 64, 64, 0.75);
+  --clickgui-button-hover-background-color: rgba(0, 255, 0, 0.5);
+  --clickgui-setting-group-border-color: rgba(16, 16, 16, 0.5);
 
-  --clickgui-dropdown-background-color: rgba(48, 48, 48, 0.95);
-  --clickgui-dropdown-border-color: rgba(128, 128, 128, 0.5);
-  --clickgui-dropdown-option-selected-color: #ad5504;
-  --clickgui-selection-chip-background-color: rgba(48, 48, 48, 0.9);
-  --clickgui-selection-chip-selected-background-color: rgba(173, 85, 4, 0.35);
-  --clickgui-selection-chip-selected-color: #ad5504;
+  --clickgui-switch-track-color: rgba(16, 16, 16, 0.5);
+  --clickgui-switch-thumb-color: rgba(240, 240, 240, 0.8);
+  --clickgui-switch-track-active-color: rgba(0, 255, 0, 0.35);
+  --clickgui-switch-thumb-active-color: #00d900;
+  --clickgui-slider-track-color: rgba(16, 16, 16, 0.5);
+  --clickgui-slider-handle-color: #00d900;
+  --clickgui-slider-fill-color: rgba(0, 255, 0, 0.5);
 
-  --clickgui-hud-editor-drawer-background-color: rgba(64, 64, 64, 0.9);
-  --clickgui-hud-editor-drawer-shadow-color: rgba(0, 0, 0, 0.5);
-  --clickgui-hud-editor-drawer-component-background-color: rgba(48, 48, 48, 0.9);
-  --clickgui-hud-editor-drawer-component-border-color: rgba(128, 128, 128, 0.5);
-  --clickgui-hud-editor-drawer-component-hover-background-color: rgba(96, 96, 96, 0.9);
-  --clickgui-hud-editor-drawer-component-hover-border-color: #ad5504;
-  --clickgui-hud-editor-drawer-toggle-button-background-color: rgba(96, 96, 96, 0.9);
-  --clickgui-hud-editor-component-settings-background-color: rgba(64, 64, 64, 0.9);
-  --clickgui-hud-editor-component-settings-shadow-color: rgba(0, 0, 0, 0.5);
+  --clickgui-dropdown-background-color: rgba(64, 64, 64, 0.9);
+  --clickgui-dropdown-border-color: rgba(16, 16, 16, 0.5);
+  --clickgui-dropdown-option-selected-color: #00d900;
+  --clickgui-selection-chip-background-color: rgba(16, 16, 16, 0.5);
+  --clickgui-selection-chip-selected-background-color: rgba(0, 255, 0, 0.35);
+  --clickgui-selection-chip-selected-color: #00ff00;
+
+  --clickgui-hud-editor-anchor-point-active-color: #00d900;
+  --clickgui-hud-editor-anchor-point-active-ring-color: #00d900;
+  --clickgui-hud-editor-anchor-point-active-shadow-color: rgba(0, 217, 0, 0.75);
+  --clickgui-hud-editor-anchor-zone-active-background-color: rgba(0, 255, 0, 0.18);
+  --clickgui-hud-editor-anchor-zone-active-border-color: #00d900;
+  --clickgui-hud-editor-magnetic-guide-color: #00d900;
+  --clickgui-hud-editor-magnetic-guide-shadow-color: rgba(0, 217, 0, 0.7);
+  --clickgui-hud-editor-drawer-background-color: rgba(64, 64, 64, 0.75);
+  --clickgui-hud-editor-drawer-shadow-color: rgba(16, 16, 16, 0.5);
+  --clickgui-hud-editor-drawer-component-background-color: rgba(64, 64, 64, 0.5);
+  --clickgui-hud-editor-drawer-component-border-color: rgba(16, 16, 16, 0.5);
+  --clickgui-hud-editor-drawer-component-hover-background-color: rgba(0, 255, 0, 0.5);
+  --clickgui-hud-editor-drawer-component-hover-border-color: #00d900;
+  --clickgui-hud-editor-drawer-toggle-button-background-color: rgba(0, 255, 0, 0.5);
+  --clickgui-hud-editor-component-settings-background-color: rgba(64, 64, 64, 0.75);
+  --clickgui-hud-editor-component-settings-shadow-color: rgba(16, 16, 16, 0.5);
+
+  /* hack list: Wurst draws it as plain text with a 1px black drop shadow */
+  --arraylist-text-color: #f0f0f0;
 }
