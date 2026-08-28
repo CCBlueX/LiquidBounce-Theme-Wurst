@@ -5,9 +5,9 @@
   "singleton": true,
   "alignment": {
     "horizontalAlignment": "Left",
-    "horizontalOffset": 0,
+    "horizontalOffset": 2,
     "verticalAlignment": "Top",
-    "verticalOffset": 30
+    "verticalOffset": 40
   },
   "values": [
     {
