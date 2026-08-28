@@ -1,12 +1,8 @@
 <script lang="ts">
     import ConfettiBackground from "./ConfettiBackground.svelte";
     import Menu from "../common/Menu.svelte";
-    import ButtonContainer from "../common/buttons/ButtonContainer.svelte";
-    import IconTextButton from "../common/buttons/IconTextButton.svelte";
-    import IconButton from "../common/buttons/IconButton.svelte";
     import {
-        browse,
-        exitClient,
+        getBackgroundShaderEnabled,
         getClientUpdate,
         openScreen,
         toggleBackgroundShaderEnabled
@@ -16,7 +12,19 @@
     import {notification} from "../common/header/notification_store";
     import {isAnniversary} from "../../../util/utils";
 
-    onMount(() => {
+    const menuButtons = [
+        {title: "Alt Manager", icon: "icon-user.svg", screen: "altmanager"},
+        {title: "Proxy Manager", icon: "icon-proxymanager.svg", screen: "proxymanager"},
+        {title: "Click GUI", icon: "icon-clickgui.svg", screen: "clickgui"}
+    ];
+
+    onMount(async () => {
+        // this theme draws its own background, so the shader is turned off if
+        // the client still has it on
+        if (await getBackgroundShaderEnabled()) {
+            await toggleBackgroundShaderEnabled();
+        }
+
         setTimeout(async () => {
             const clientUpdate = await getClientUpdate();
 
@@ -36,45 +44,22 @@
     {#if isAnniversary()}
         <ConfettiBackground/>
     {/if}
-
-    <div class="content">
-        <div class="bottom-section" transition:fly|global={{duration: 200, y: 50, delay: 0}}>
-            <div class="additional-buttons">
-                <ButtonContainer>
-                    
-                    <IconTextButton icon="icon-exit.svg" title="Exit" on:click={exitClient}/>
-                    <IconTextButton icon="icon-change-background.svg" title="Toggle Shader"
-                                    on:click={toggleBackgroundShaderEnabled}/>
-                    <IconTextButton icon="icon-proxymanager.svg" title="Proxy Manager" on:click={() => openScreen("proxymanager")}/>
-                    <IconTextButton icon="icon-clickgui.svg" title="Click GUI" on:click={() => openScreen("clickgui")}/>
-                </ButtonContainer>
-            </div>
-
-            <div class="social-buttons">
-                <ButtonContainer>
-                    <IconButton title="Forum" icon="nodebb" on:click={() => browse("MAINTAINER_FORUM")}/>
-                    <IconButton title="GitHub" icon="github" on:click={() => browse("MAINTAINER_GITHUB")}/>
-                    <IconButton title="Discord" icon="discord" on:click={() => browse("MAINTAINER_DISCORD")}/>
-                    <IconButton title="Twitter" icon="twitter" on:click={() => browse("MAINTAINER_TWITTER")}/>
-                    <IconButton title="YouTube" icon="youtube" on:click={() => browse("MAINTAINER_YOUTUBE")}/>
-                    <IconTextButton title="liquidbounce.net" icon="icon-liquidbounce.net.svg"
-                                    on:click={() => browse("CLIENT_WEBSITE")}/>
-                </ButtonContainer>
-            </div>
-        </div>
-    </div>
 </Menu>
 
 <!-- Wurst Logo -->
 <img class="wurst-logo" src="img/wurst_128.png" alt="Wurst Client"  transition:fly|global={{duration: 200, y: -60, delay: 0}} />
 
-<style>
+<nav class="menu-buttons" transition:fly|global={{duration: 200, y: 30, delay: 0}}>
+    {#each menuButtons as {title, icon, screen} (screen)}
+        <button class="menu-button" on:click={() => openScreen(screen)}>
+            <img class="icon" src="img/menu/{icon}" alt="" aria-hidden="true"/>
+            <span class="label">{title}</span>
+        </button>
+    {/each}
+</nav>
 
-    .content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
+<style lang="scss">
+    @use "../../../colors.scss" as *;
 
     .wurst-logo {
         height: auto;
@@ -85,17 +70,44 @@
         transform: translateX(-50%);
         filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
         z-index: 10;
-        object-fit: contain; /* Ensure the image scales properly within the fixed dimensions */
+        object-fit: contain;
     }
 
-    .bottom-section {
+    /* centred directly under the logo, styled like Wurst's feature boxes */
+    .menu-buttons {
         position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
+        top: 215px;
+        left: 50%;
+        transform: translateX(-50%);
         display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        padding: 0;
+        gap: 4px;
+        z-index: 10;
+    }
+
+    .menu-button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        border: none;
+        border-radius: 0;
+        cursor: pointer;
+        color: $wurst-text;
+        font-size: 18px;
+        background: rgba($wurst-bg, $wurst-opacity);
+        transition: background-color 0.2s;
+
+        &:hover {
+            background: rgba($wurst-bg, $wurst-hover-opacity);
+        }
+    }
+
+    .icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .label {
+        white-space: nowrap;
     }
 </style>

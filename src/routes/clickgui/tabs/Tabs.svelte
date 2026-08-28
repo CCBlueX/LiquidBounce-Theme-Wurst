@@ -37,42 +37,51 @@
 </div>
 
 <style lang="scss">
+  @use "../../../colors.scss" as *;
 
+  /* a row of Wurst feature boxes: flat grey at the GUI opacity, 1px accent
+     separators between them, green when active, brighter on hover */
   .available-tabs {
     position: fixed;
     top: 15px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 5px;
-    padding: 4px;
+    gap: 0;
+    padding: 0;
     border-radius: 0;
-    border: 1px solid rgba(128, 128, 128, 0.5);
-    background-color: var(--clickgui-tabs-background-color);
-    box-shadow: 0 0 10px var(--clickgui-tabs-shadow-color);
+    background-color: rgba($wurst-bg, $wurst-opacity);
+    box-shadow: 0 0 6px rgba($wurst-accent, 0.5);
     z-index: 9999999999;
   }
 
   .tab-button {
     background: transparent;
-    color: var(--clickgui-text-dimmed-color);
-    padding: 6px 14px;
-    font-size: 14px;
-    font-weight: 600;
+    color: $wurst-text;
+    padding: 5px 16px;
+    font-size: 16px;
+    font-weight: normal;
     border-radius: 0;
     cursor: pointer;
-    transition: ease background-color 0.2s, ease color 0.2s;
-    border: solid 1px transparent;
+    border: none;
+    transition: ease background-color 0.2s;
+
+    & + .tab-button {
+      border-left: 1px solid rgba($wurst-accent, 0.5);
+    }
 
     &:hover {
-      color: var(--clickgui-text-color);
-      background-color: var(--clickgui-tab-hover-background-color);
+      color: $wurst-text;
+      background-color: rgba($wurst-bg, $wurst-hover-opacity);
     }
 
     &.active {
-      color: var(--clickgui-text-color);
-      background-color: var(--clickgui-tab-active-background-color);
-      border: 1px solid var(--clickgui-tab-active-border-color);
+      color: $wurst-text;
+      background-color: rgba($wurst-enabled, $wurst-opacity);
+    }
+
+    &.active:hover {
+      background-color: rgba($wurst-enabled, $wurst-hover-opacity);
     }
   }
 </style>

@@ -31,7 +31,7 @@
     @use "../../colors.scss" as *;
     .wurst-search {
         position: absolute;
-        top: 40px;
+        top: 62px;
         left: 50%;
         transform: translateX(-50%);
         margin-left: -200px;

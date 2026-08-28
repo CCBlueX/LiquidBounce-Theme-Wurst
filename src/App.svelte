@@ -8,9 +8,7 @@
     import {isStatic} from "./integration/host";
     import Inventory from "./routes/inventory/Inventory.svelte";
     import Title from "./routes/menu/title/Title.svelte";
-    import Multiplayer from "./routes/menu/multiplayer/Multiplayer.svelte";
     import AltManager from "./routes/menu/altmanager/AltManager.svelte";
-    import Singleplayer from "./routes/menu/singleplayer/Singleplayer.svelte";
     import ProxyManager from "./routes/menu/proxymanager/ProxyManager.svelte";
     import None from "./routes/none/None.svelte";
     import Disconnected from "./routes/menu/disconnected/Disconnected.svelte";
@@ -22,9 +20,7 @@
     import MenuContent from "./routes/menu/common/MenuContent.svelte";
 
     const menuRoutes = {
-        "/multiplayer": Multiplayer,
         "/altmanager": AltManager,
-        "/singleplayer": Singleplayer,
         "/proxymanager": ProxyManager,
     };
 

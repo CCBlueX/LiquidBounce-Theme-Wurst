@@ -25,7 +25,7 @@
         column-gap: 10px;
         font-size: 20px;
         padding-right: 5px;
-        background-color: rgba($wurst-accent, 0.5);
+        background-color: rgba(white, 0.5);
         height: 22px;
 
         .logo {
@@ -33,7 +33,7 @@
         }
 
         .version {
-            color: $wurst-text;
+            color: black;
             white-space: nowrap;
         }
     }

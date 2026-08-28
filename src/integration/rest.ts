@@ -752,6 +752,13 @@ export async function reconnectToServer() {
     });
 }
 
+export async function getBackgroundShaderEnabled(): Promise<boolean> {
+    const response = await fetch(`${API_BASE}/client/shader`);
+    const data = await response.json();
+
+    return data.shaderEnabled;
+}
+
 export async function toggleBackgroundShaderEnabled() {
     await fetch(`${API_BASE}/client/shader`, {
         method: "POST",
