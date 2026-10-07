@@ -1,6 +1,6 @@
 <script lang="ts">
     import {onMount} from "svelte";
-    import {getGameWindow, getModules, getModuleSettings, setTyping} from "../../integration/rest";
+    import {getGameWindow, getModules, getModuleSettings} from "../../integration/rest";
     import type {ConfigurableSetting, Module, TogglableSetting} from "../../integration/types";
     import WurstSearch from "./WurstSearch.svelte";
     import WurstModuleGrid from "./WurstModuleGrid.svelte";
@@ -54,8 +54,6 @@
 
         const clickGuiSettings = await getModuleSettings("ClickGUI");
         applyValues(clickGuiSettings);
-
-        await setTyping(false);
     });
 
     listen("scaleFactorChange", (e: ScaleFactorChangeEvent) => {

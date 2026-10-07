@@ -5,7 +5,7 @@ uniform float time;
 uniform vec2 resolution;
 
 // Output color
-out vec4 fragColor;
+layout(location = 0) out vec4 fragColor;
 
 float rand(vec2 co){
     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
