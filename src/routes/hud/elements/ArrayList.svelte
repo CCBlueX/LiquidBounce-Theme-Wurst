@@ -5,6 +5,7 @@
     import {listen} from "../../../integration/ws";
     import {flip} from "svelte/animate";
     import {fly} from "svelte/transition";
+    import type {HudArrayListSettings} from "../components";
 
     export let settings: { [name: string]: any };
 
