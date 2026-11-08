@@ -12,6 +12,7 @@
     import ProxyManager from "./routes/menu/proxymanager/ProxyManager.svelte";
     import None from "./routes/none/None.svelte";
     import Disconnected from "./routes/menu/disconnected/Disconnected.svelte";
+    import Connecting from "./routes/menu/connecting/Connecting.svelte";
     import BasicMenu from "./routes/menu/basicmenu/BasicMenu.svelte";
     import Browser from "./routes/browser/Browser.svelte";
     import TabbedClickGui from "./routes/clickgui/TabbedClickGui.svelte";
@@ -32,6 +33,7 @@
         "/hud": Hud,
         "/inventory": Inventory,
         "/none": None,
+        "/connecting": Connecting,
         "/disconnected": Disconnected,
         "/basicmenu": BasicMenu,
         "/browser": Browser
