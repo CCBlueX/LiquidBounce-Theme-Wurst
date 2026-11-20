@@ -1,5 +1,10 @@
 <script lang="ts">
+    import {escapeLayer} from "../../integration/escape";
+
     export let searchQuery: string = "";
+
+    const layer = escapeLayer(() => searchQuery = "");
+    $: layer.setOpen(!!searchQuery);
 </script>
 
 <div class="wurst-search">

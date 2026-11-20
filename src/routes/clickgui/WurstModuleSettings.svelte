@@ -2,6 +2,7 @@
     import type {Module, ConfigurableSetting} from "../../integration/types";
     import {setModuleSettings} from "../../integration/rest";
     import {createEventDispatcher} from "svelte";
+    import {escapeLayer} from "../../integration/escape";
     import GenericSetting from "./setting/common/GenericSetting.svelte";
     
     export let module: Module;
@@ -17,14 +18,8 @@
         dispatch('close');
     }
     
-    function handleKeydown(event: KeyboardEvent) {
-        if (event.key === 'Escape') {
-            closeSettings();
-        }
-    }
+    escapeLayer(closeSettings).setOpen(true);
 </script>
-
-<svelte:window on:keydown={handleKeydown} />
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
