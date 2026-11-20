@@ -39,6 +39,7 @@
     "Minecraft.otf"
   ],
   "nativeFont": "Inter Medium",
+  "screenTweaks": ["DISABLE_LOGO", "DISABLE_SPLASH"],
   "backgrounds": [
     {
       "name": "background",
