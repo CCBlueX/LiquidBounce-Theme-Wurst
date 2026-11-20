@@ -19,7 +19,7 @@
     .settings-panel {
         position: absolute;
         top: 100px;
-        bottom: 40px;
+        max-height: calc(100vh - 140px);
         left: 50%;
         transform: translateX(-50%);
         width: 600px;
