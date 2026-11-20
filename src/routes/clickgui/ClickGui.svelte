@@ -5,6 +5,7 @@
     import WurstSearch from "./WurstSearch.svelte";
     import WurstModuleGrid from "./WurstModuleGrid.svelte";
     import WurstModuleSettings from "./WurstModuleSettings.svelte";
+    import GlobalSettings from "./GlobalSettings.svelte";
     import {fade} from "svelte/transition";
     import {listen} from "../../integration/ws";
     import type {ClickGuiValueChangeEvent, ScaleFactorChangeEvent} from "../../integration/events";
@@ -15,6 +16,7 @@
     let minecraftScaleFactor = 2;
     let clickGuiScaleFactor = 1;
     let searchQuery = "";
+    let globalSettingsOpen = false;
     
     $: {
         scaleFactor.set(minecraftScaleFactor * clickGuiScaleFactor);
@@ -67,14 +69,21 @@
 
 <div class="wurst-clickgui" transition:fade|global={{duration: 200}}>
     <WurstSearch bind:searchQuery />
-    <WurstModuleGrid modules={filteredModules} />
+    <WurstModuleGrid modules={filteredModules} openGlobalSettings={() => globalSettingsOpen = true} />
     
     {#if $activeSettings}
         <WurstModuleSettings 
+            title="{$activeSettings.module.name} Settings"
             module={$activeSettings.module} 
             moduleSettings={$activeSettings.settings} 
             on:close={closeSettings} 
         />
+    {/if}
+
+    {#if globalSettingsOpen}
+        <WurstModuleSettings title="Settings" on:close={() => globalSettingsOpen = false}>
+            <GlobalSettings/>
+        </WurstModuleSettings>
     {/if}
 </div>
 

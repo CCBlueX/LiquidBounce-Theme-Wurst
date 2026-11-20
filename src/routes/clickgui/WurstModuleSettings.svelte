@@ -5,13 +5,17 @@
     import {escapeLayer} from "../../integration/escape";
     import GenericSetting from "./setting/common/GenericSetting.svelte";
     
-    export let module: Module;
-    export let moduleSettings: ConfigurableSetting;
+    export let title: string;
+    // left out for global settings, which come in through the slot
+    export let module: Module | null = null;
+    export let moduleSettings: ConfigurableSetting | null = null;
     
     const dispatch = createEventDispatcher();
     
     async function updateSettings() {
-        await setModuleSettings(module.name, moduleSettings);
+        if (module && moduleSettings) {
+            await setModuleSettings(module.name, moduleSettings);
+        }
     }
     
     function closeSettings() {
@@ -28,16 +32,20 @@
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="settings-panel" on:click|stopPropagation>
         <div class="settings-header">
-            <h3>{module.name} Settings</h3>
+            <h3>{title}</h3>
             <button class="close-button" on:click={closeSettings}>×</button>
         </div>
         
         <div class="settings-content">
-            {#each moduleSettings.value as setting (setting.name)}
-                {#if setting.name !== "Hidden"}
-                    <GenericSetting path="wurst-settings" bind:setting on:change={updateSettings} />
+            <slot>
+                {#if moduleSettings}
+                    {#each moduleSettings.value as setting (setting.name)}
+                        {#if setting.name !== "Hidden"}
+                            <GenericSetting path="wurst-settings" bind:setting on:change={updateSettings} />
+                        {/if}
+                    {/each}
                 {/if}
-            {/each}
+            </slot>
         </div>
     </div>
 </div>
