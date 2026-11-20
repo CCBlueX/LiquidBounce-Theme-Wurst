@@ -14,6 +14,7 @@
     import {listen} from "../../integration/ws";
     import type {ClickGuiValueChangeEvent, ScaleFactorChangeEvent} from "../../integration/events";
     import HudEditor from "./tabs/hud_editor/HudEditor.svelte";
+    import WurstGlobalSettings from "./WurstGlobalSettings.svelte";
     import {isTextEntry} from "../../util/utils";
     import {persistentDataLoaded, setItem} from "../../integration/persistent_storage";
 
@@ -22,6 +23,7 @@
     const tabs = [
         {title: "ClickGUI", content: ClickGui},
         {title: "HUD Editor", content: HudEditor},
+        {title: "Settings", content: WurstGlobalSettings},
     ];
 
     let activeTab = $state(0);
