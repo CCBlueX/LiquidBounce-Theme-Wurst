@@ -105,12 +105,21 @@
             return;
         }
 
-        listenAlways("socketReady", async () => {
+        let screenRevision = 0;
+
+        async function syncVirtualScreen() {
+            const revision = ++screenRevision;
             const virtualScreen = await getVirtualScreen();
-            await changeRoute(virtualScreen.name || "none");
-        });
+            // A screen event can arrive while the snapshot is in flight.
+            if (revision === screenRevision) {
+                await changeRoute(virtualScreen.name || "none");
+            }
+        }
+
+        listenAlways("socketReady", syncVirtualScreen);
 
         listenAlways("virtualScreen", async (event: any) => {
+            ++screenRevision;
             console.log(`[Router] Virtual screen change to ${event.screenName}`);
             const action = event.action;
 
@@ -124,8 +133,7 @@
             }
         });
 
-        const virtualScreen = await getVirtualScreen();
-        await changeRoute(virtualScreen.name || "none");
+        await syncVirtualScreen();
     });
 </script>
 

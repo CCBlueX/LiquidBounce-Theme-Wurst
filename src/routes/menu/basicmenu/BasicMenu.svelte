@@ -5,7 +5,7 @@
 </script>
 
 <!-- Clicks also reach the vanilla screen below, so this stays in its empty left strip. -->
-<nav class="basic-menu" transition:fly|global={{duration: 200, x: -60}}>
+<nav class="basic-menu" in:fly|global={{duration: 180, x: -60}}>
     <FeatureButton title="Full Mode" icon="liquidbounce" on:click={toggleBasicMode}/>
     <FeatureButton title="Click GUI" icon="clickgui" on:click={() => openScreen("clickgui")}/>
     <FeatureButton title="Alt Manager" icon="user" on:click={() => openScreen("altmanager")}/>
